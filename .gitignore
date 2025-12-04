@@ -1,0 +1,19 @@
+# Global ignores
+node_modules/
+.env
+.env.local
+.env.development
+.env.production
+
+# Build folders
+dist/
+build/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+
+# Cache
+.cache/
+.next/
