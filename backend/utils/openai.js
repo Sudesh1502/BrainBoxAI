@@ -1,4 +1,4 @@
-import dotenv from 'dotenv/connfig';
+import dotenv from 'dotenv/config';
 
 const getOpenAiResponse = async (message) => {
     
@@ -24,10 +24,12 @@ const getOpenAiResponse = async (message) => {
             const response = await fetch("https://api.openai.com/v1/chat/completions", options);
             let data = await response.json();
             // console.log(data);
-            res.send(data.choices[0].message.content);
+            return data.choices[0].message.content;
 
         } catch (err) {
             console.log(err)
         }
     
 }
+
+export default getOpenAiResponse;
