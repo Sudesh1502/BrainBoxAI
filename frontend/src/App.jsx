@@ -6,10 +6,12 @@ import Sidebar from './components/Sidebar.jsx'
 import MyContext from './MyContext.jsx'
 import {v1 as uuidv1} from 'uuid'
 function App() {
-  const [prompt, setPrompt] = useState(null);
+  const [prompt, setPrompt] = useState("");
   const [reply, setReply] = useState(null);
   const [threadId, setThreadId] = useState(uuidv1());
-  const contextvalues = {prompt, setPrompt, reply, setReply, threadId, setThreadId};
+  const [prevChat, setPrevChat] = useState([]);
+  const [newChat, setNewChat]  = useState(true);
+  const contextvalues = {prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat, newChat, setNewChat};
   return (
     <>
     <MyContext.Provider value={contextvalues} >

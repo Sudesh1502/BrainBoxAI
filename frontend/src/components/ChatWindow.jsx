@@ -1,11 +1,11 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./ChatWindow.css";
 import Chat from "./Chat";
 import MyContext from "../MyContext";
 import {PacmanLoader} from 'react-spinners'
 
 const ChatWindow = () => {
-  const { prompt, setPrompt, reply, setReply, threadId, setThreadId } =
+  const { prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat } =
     useContext(MyContext);
     const [loading, setLoading] = useState(false);
 
@@ -26,12 +26,27 @@ const ChatWindow = () => {
       const response = await fetch(`http://localhost:8080/api/chat`, options);
       const data = await response.json();
       console.log(data);
+      setReply(data);
       setLoading(false);
     } catch (err) {
       console.log(err);
       setLoading(false);
     }
   };
+
+
+  useEffect(()=>{
+    if(prompt && reply){
+      setPrevChat(prevChat=>{
+        [...prevChat,{
+          role:"user",
+          content:prompt
+        },reply]
+      })
+      setPrompt("");
+    }
+  },[reply])
+
   return (
     <div className="chatwindow">
       <div className="navbar">
