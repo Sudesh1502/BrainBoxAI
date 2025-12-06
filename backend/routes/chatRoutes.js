@@ -72,12 +72,11 @@ chatRoutes.delete('/thread/:threadId', async (req, res) => {
 
 //creating the chat/thread or updating the existing one
 chatRoutes.post('/chat', async (req, res) => {
-    const { threadId} = req.query;
-    const {message} = req.body;
+    const {message, threadId} = req.body;
 
     try {
         //fiinding the thread from db based on thread id
-        const thread = await Thread.findOne({ thread_id: threadId });
+        let thread = await Thread.findOne({ thread_id: threadId });
 
         if (!thread) {
             //creating new thread if thread not found
