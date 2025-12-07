@@ -20,7 +20,12 @@ const ThreadSchema = new mongoose.Schema({
         type:String,
         required:true,
         unique:true
-    },
+    }, 
+    user: {                                // 👈 ADD THIS
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true
+  },
     title:{
         type:String,
         default:"New Chat"

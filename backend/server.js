@@ -6,16 +6,30 @@ import 'dotenv/config'
 import cors from 'cors'
 import connectDB from './configDb.js';
 import chatRoutes from './routes/chatRoutes.js';
+import userRouter from './routes/authRoutes.js';
+import cookieParser from 'cookie-parser';
+
+
 const app = express();
 
 //pase the incoming request in json body
-app.use(express.json());
+
 
 //validating authorized req
 app.use(cors())
 
+//useing cookie parser
+app.use(cookieParser());
+
+//pase the incoming request in json body
+app.use(express.json());
+
+
 //routes for api
 app.use('/api',chatRoutes);
+
+//routes for authentication
+app.use('/auth', userRouter)
 
 //test end point
 

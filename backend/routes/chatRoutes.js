@@ -1,6 +1,7 @@
 import express, { response } from 'express'
 import Thread from '../modules/Thread.js';
 import getOpenAiResponse from '../utils/openai.js'
+import { protect } from '../utils/middlewares.js';
 
 const chatRoutes = express.Router();
 
@@ -21,10 +22,10 @@ chatRoutes.post('/test', async (req, res) => {
 });
 
 //endpoint to get all threads
-chatRoutes.get('/threads', async (req, res) => {
+chatRoutes.get('/threads', protect, async (req, res) => {
     try {
         //fetching threads in decending order make history easy to appear
-        const threads = await Thread.find({}).sort({ updatedAt: -1 });
+        const threads = await Thread.find({ user: req.user._id }).sort({ updatedAt: -1 });
         res.status(200).json(threads);
     } catch (err) {
         console.log(err);
@@ -33,12 +34,12 @@ chatRoutes.get('/threads', async (req, res) => {
 })
 
 //endpoint to to get a particular thread
-chatRoutes.get('/thread/:threadId', async (req, res) => {
+chatRoutes.get('/thread/:threadId', protect, async (req, res) => {
     //get thread id from url
     const { threadId } = req.params;
     try {
         //finding the particular thread
-        const thread = await Thread.findOne({ thread_id: threadId });
+        const thread = await Thread.findOne({ thread_id: threadId, user: req.user._id });
 
         //if thread is not present
         if (!thread) return res.status(400).json({ error: "Thread not found" });
@@ -52,12 +53,12 @@ chatRoutes.get('/thread/:threadId', async (req, res) => {
 
 
 //endpoint to to delete a particular thread
-chatRoutes.delete('/thread/:threadId', async (req, res) => {
+chatRoutes.delete('/thread/:threadId', protect, async (req, res) => {
     //get thread id from url
     const { threadId } = req.params;
     try {
         //finding and delete the particular thread
-        const thread = await Thread.findOneAndDelete({ thread_id: threadId });
+        const thread = await Thread.findOneAndDelete({ thread_id: threadId, user: req.user._id });
 
         //if thread is not present
         if (!thread) return res.status(400).json({ error: "Thread not found" });
@@ -71,18 +72,19 @@ chatRoutes.delete('/thread/:threadId', async (req, res) => {
 
 
 //creating the chat/thread or updating the existing one
-chatRoutes.post('/chat', async (req, res) => {
-    const {message, threadId} = req.body;
+chatRoutes.post('/chat', protect, async (req, res) => {
+    const { message, threadId } = req.body;
 
     try {
         //fiinding the thread from db based on thread id
-        let thread = await Thread.findOne({ thread_id: threadId });
+        let thread = await Thread.findOne({ thread_id: threadId, user: req.user._id });
 
         if (!thread) {
             //creating new thread if thread not found
             thread = new Thread({
                 thread_id: threadId,
                 title: message,
+                user: req.user._id,
                 messages: [{ role: "user", content: message }]
             })
         } else {
@@ -94,10 +96,10 @@ chatRoutes.post('/chat', async (req, res) => {
         const aiResponse = await getOpenAiResponse(message);
 
         //sending ai response to user
-        res.status(201).json({role:"assistant", content:aiResponse});
+        res.status(201).json({ role: "assistant", content: aiResponse });
 
         //save ai response to DB
-        thread.messages.push({role:"assistant", content:aiResponse});
+        thread.messages.push({ role: "assistant", content: aiResponse });
 
         //updating the updatedAt to modification time
         thread.updatedAt = new Date();
