@@ -1,20 +1,120 @@
-import React from "react";
+import React, { useContext, useEffect, useState } from "react";
 import "./Sidebar.css";
 import logo from "../assets/brainBox AI.png";
+import MyContext from "../MyContext";
+import { v1 as uuidv1 } from "uuid";
 const Sidebar = () => {
+  const {
+    setPrompt,
+    setReply,
+    threadId,
+    setThreadId,
+    allThreads,
+    setAllThreads,
+    prevChat,
+    setPrevChat,
+    setNewChat,
+  } = useContext(MyContext);
+
+  const getAllThreads = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/api/threads");
+      const res = await response.json();
+      const data = res.map((thread) => {
+        return { threadId: thread.thread_id, title: thread.title };
+      });
+
+      console.log(data);
+      setAllThreads(data);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  useEffect(() => {
+    getAllThreads();
+  }, [threadId]);
+
+  const createNewChat = () => {
+    setNewChat(true);
+    setPrompt("");
+    setReply(null);
+    setPrevChat([]);
+    setThreadId(uuidv1());
+  };
+
+  const getChat = async (newThreadId) => {
+    setThreadId(newThreadId);
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/thread/${newThreadId}`
+      );
+      const res = await response.json();
+      setNewChat(false);
+      setReply(null);
+      setPrevChat(res.messages);
+      console.log(res.messages);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const deleteThread = async (newThreadId) => {
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/thread/${newThreadId}`,
+        { method: "DELETE" }
+      );
+      const res = await response.json();
+      setAllThreads((prev) =>
+        prev.filter((thread) => thread.threadId !== newThreadId)
+      );
+      if (newThreadId == threadId) {
+        createNewChat();
+      }
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <section className="sidebar">
       {/* create new btn */}
-      <button type="submit" className="newChatBtn">
+      <button
+        type="submit"
+        onClick={(e) => {
+          e.preventDefault();
+          createNewChat();
+        }}
+        className="newChatBtn"
+      >
         <img src={logo} alt="logo" className="logoBtn" />
         <i className="fa-solid fa-pen-to-square"></i>
       </button>
 
       {/* history list  */}
       <ul className="history">
-        <li>history 1</li>
-        <li>history 2</li>
-        <li>history 3</li>
+        {allThreads?.map((thread, idx) => (
+          <div className="history-item" key={idx}>
+            <li
+              onClick={(e) => {
+                e.preventDefault();
+                getChat(thread.threadId);
+              }}
+            >
+              {thread.title}
+            </li>
+            <span className="del">
+              <i
+                className="fa-solid fa-trash"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  deleteThread(thread.threadId);
+                }}
+              ></i>
+            </span>
+          </div>
+        ))}
       </ul>
       <div className="sign">
         <p>By Sudesh Mhamankar</p>

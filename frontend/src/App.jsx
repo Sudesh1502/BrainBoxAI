@@ -11,7 +11,8 @@ function App() {
   const [threadId, setThreadId] = useState(uuidv1());
   const [prevChat, setPrevChat] = useState([]);
   const [newChat, setNewChat]  = useState(true);
-  const contextvalues = {prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat, newChat, setNewChat};
+  const [allThreads, setAllThreads] = useState(null);
+  const contextvalues = {prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat, newChat, setNewChat, allThreads, setAllThreads};
   return (
     <>
     <MyContext.Provider value={contextvalues} >

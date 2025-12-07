@@ -6,8 +6,12 @@
 body{
   margin: 0;
   padding: 0;
+  height: 100vh;
+  overflow: hidden;
 }
-
+body::-webkit-scrollbar{
+  display: none;
+}
 .app{
   background-color: #212121;
   display: flex;

@@ -10,6 +10,15 @@
     text-align: center;
 }
 
+.loaderContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px; 
+  /* push loader up, so it doesn't overlap input */
+  margin-bottom: 20px;
+}
+
 /* nav bar portion  */
 .navbar {
     width: 100%;

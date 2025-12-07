@@ -2,12 +2,22 @@ import React, { useContext, useEffect, useState } from "react";
 import "./ChatWindow.css";
 import Chat from "./Chat";
 import MyContext from "../MyContext";
-import {PacmanLoader} from 'react-spinners'
+import { PropagateLoader } from "react-spinners";
 
 const ChatWindow = () => {
-  const { prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat,setNewChat } =
-    useContext(MyContext);
-    const [loading, setLoading] = useState(false);
+  const {
+    prompt,
+    setPrompt,
+    reply,
+    setReply,
+    threadId,
+    setThreadId,
+    prevChat,
+    setPrevChat,
+    setNewChat,
+  } = useContext(MyContext);
+  const [loading, setLoading] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
   const getReply = async () => {
     setLoading(true);
@@ -34,39 +44,59 @@ const ChatWindow = () => {
     }
   };
 
-
-  useEffect(()=>{
-    if(prompt && reply){
-      setPrevChat(prevChat=>{
-        return [...prevChat,{
-          role:"user",
-          content:prompt
-        },reply]
-      })
+  useEffect(() => {
+    if (prompt && reply) {
+      setPrevChat((prevChat) => {
+        return [
+          ...prevChat,
+          {
+            role: "user",
+            content: prompt,
+          },
+          reply,
+        ];
+      });
       setPrompt("");
       setNewChat(false);
     }
-  },[reply])
+  }, [reply]);
+
+  const handleProfileClick = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
     <div className="chatwindow">
       <div className="navbar">
         <span>
-          BrainBox AI<i class="fa-solid fa-angle-down"></i>
+          BrainBox AI<i className="fa-solid fa-angle-down"></i>
         </span>
 
-        <div className="userIconDiv">
+        <div className="userIconDiv" onClick={handleProfileClick}>
           <span className="userIcon">
-            <i class="fa-solid fa-user"></i>
+            <i className="fa-solid fa-user"></i>
           </span>
         </div>
       </div>
 
-      <Chat>
-        
-                
-      </Chat>
-<PacmanLoader color="orange" loading={loading}/>
+      {isOpen && (
+        <div className="dropDown">
+          <div className="dropDownItem">
+            <i class="fa-solid fa-gear"></i> Settings
+          </div>
+          <div className="dropDownItem">
+            <i class="fa-solid fa-cloud-arrow-up"></i> Upgrade plan
+          </div>
+          <div className="dropDownItem">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+          </div>
+        </div>
+      )}
+      
+      <Chat></Chat>
+      <div className="loaderContainer">
+  <PropagateLoader color="white" loading={loading} />
+</div>
       <div className="chatInput">
         <div className="userinput">
           <input
@@ -88,9 +118,8 @@ const ChatWindow = () => {
             onClick={(e) => {
               getReply();
             }}
-            
           >
-            <i class="fa-solid fa-paper-plane"></i>
+            <i className="fa-solid fa-paper-plane"></i>
           </div>
         </div>
         <p className="info">
