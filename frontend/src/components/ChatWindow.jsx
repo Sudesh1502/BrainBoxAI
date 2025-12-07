@@ -5,7 +5,7 @@ import MyContext from "../MyContext";
 import {PacmanLoader} from 'react-spinners'
 
 const ChatWindow = () => {
-  const { prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat } =
+  const { prompt, setPrompt, reply, setReply, threadId, setThreadId, prevChat, setPrevChat,setNewChat } =
     useContext(MyContext);
     const [loading, setLoading] = useState(false);
 
@@ -38,12 +38,13 @@ const ChatWindow = () => {
   useEffect(()=>{
     if(prompt && reply){
       setPrevChat(prevChat=>{
-        [...prevChat,{
+        return [...prevChat,{
           role:"user",
           content:prompt
         },reply]
       })
       setPrompt("");
+      setNewChat(false);
     }
   },[reply])
 
