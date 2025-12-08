@@ -17,7 +17,10 @@ const app = express();
 
 //validating authorized req
 app.use(cors({
-  origin: "http://localhost:5173",
+  origin: [
+    "http://localhost:5173",
+    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
+  ],
   credentials: true,
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"]
