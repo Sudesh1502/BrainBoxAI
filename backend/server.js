@@ -23,20 +23,13 @@ app.use(cors({
   credentials: true
 }));
 
-// force allow credentials
+
+
+// Allow credentials header explicitly
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
   next();
 });
-
-//validating authorized req
-app.options("*", cors({
-  origin: [
-    "http://localhost:5173",
-    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
-  ],
-  credentials: true
-}));
 
 
 //useing cookie parser
