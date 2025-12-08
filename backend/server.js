@@ -18,7 +18,8 @@ const app = express();
 app.use(cors({
   origin: [
     "http://localhost:5173",
-    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
+    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app",
+    "https://693714f922de7dc78b0ccafa--brainboxaiweb.netlify.app/"
   ],
   credentials: true
 }));
