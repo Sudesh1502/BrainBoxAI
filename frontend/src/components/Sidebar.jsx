@@ -18,7 +18,7 @@ const Sidebar = ({ setShowSidebar }) => {
 
   const getAllThreads = async () => {
     try {
-      const response = await fetch("https://brainboxai.onrender.com/api/threads", {
+      const response = await fetch(`${import.meta.env.VITE_RENDER_URL}/api/threads`, {
         method: "GET",
         credentials: "include",
       });
@@ -50,7 +50,7 @@ const Sidebar = ({ setShowSidebar }) => {
 
     try {
       const response = await fetch(
-        `https://brainboxai.onrender.com/api/thread/${newThreadId}`,
+        `${import.meta.env.VITE_RENDER_URL}/api/thread/${newThreadId}`,
         {
           method: "GET",
           credentials: "include",
@@ -69,7 +69,7 @@ const Sidebar = ({ setShowSidebar }) => {
   const deleteThread = async (newThreadId) => {
     try {
       const response = await fetch(
-        `https://brainboxai.onrender.com/api/thread/${newThreadId}`,
+        `${import.meta.env.VITE_RENDER_URL}/api/thread/${newThreadId}`,
         {
           method: "DELETE",
           credentials: "include",

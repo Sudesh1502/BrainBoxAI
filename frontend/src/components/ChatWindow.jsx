@@ -24,7 +24,7 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
 
   const logout = async () => {
     try {
-      const res = await fetch("https://brainboxai.onrender.com/auth/logout", {
+      const res = await fetch(`${import.meta.env.VITE_RENDER_URL}/auth/logout`, {
         method: "POST",
         credentials: "include",
       });
@@ -55,7 +55,7 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
     };
 
     try {
-      const response = await fetch(`https://brainboxai.onrender.com/api/chat`, options);
+      const response = await fetch(`${import.meta.env.VITE_RENDER_URL}/api/chat`, options);
       const data = await response.json();
       console.log(data);
       setReply(data);
@@ -109,10 +109,10 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
       {isOpen && (
         <div className="dropDown">
           <div className="dropDownItem">
-            <i class="fa-solid fa-gear"></i> Settings
+            <i className="fa-solid fa-gear"></i> Settings
           </div>
           <div className="dropDownItem">
-            <i class="fa-solid fa-cloud-arrow-up"></i> Upgrade plan
+            <i className="fa-solid fa-cloud-arrow-up"></i> Upgrade plan
           </div>
           <div className="dropDownItem">
             <span
@@ -122,7 +122,7 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
                 logout();
               }}
             >
-              <i class="fa-solid fa-arrow-right-from-bracket"></i> Log out
+              <i className="fa-solid fa-arrow-right-from-bracket"></i> Log out
             </span>
           </div>
         </div>

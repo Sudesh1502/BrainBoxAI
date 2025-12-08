@@ -33,7 +33,7 @@ const Authentication = () => {
         }),
       };
       const response = await fetch(
-        "https://brainboxai.onrender.com/auth/signup",
+        `${import.meta.env.VITE_RENDER_URL}/auth/signup`,
         options
       );
       //conversting res into json
@@ -80,7 +80,7 @@ const Authentication = () => {
       };
 
       const response = await fetch(
-        "https://brainboxai.onrender.com/auth/signin",
+        `${import.meta.env.VITE_RENDER_URL}/auth/signin`,
         options
       );
       const res = await response.json(); // always parse JSON
