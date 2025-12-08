@@ -6,6 +6,7 @@ import './index.css'
 import "react-toastify/dist/ReactToastify.css";
 import App from './components/App.jsx'
 
+//date - 08/11/2025 - we are ready to deploy
 createRoot(document.getElementById('root')).render(
   <StrictMode>
   <BrowserRouter>
