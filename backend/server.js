@@ -7,16 +7,31 @@ import userRouter from './routes/authRoutes.js';
 
 const app = express();
 
-app.use(cors({
-  origin: [
-    "http://localhost:5173",
-    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app",
-    "https://693714f922de7dc78b0ccafa--brainboxaiweb.netlify.app"
-  ],
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"],
+const allowedOrigins = [
+  "http://localhost:5173",
+  "https://brainboxaiweb.netlify.app",
+  "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
+];
+
+const corsOptions = {
+  origin: allowedOrigins,
   credentials: true
-}));
+};
+
+app.use(cors(corsOptions));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", req.headers.origin);
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+
+  if (req.method === "OPTIONS") {
+    return res.sendStatus(200);
+  }
+
+  next();
+});
 
 app.use(express.json());
 app.use(cookieParser());
