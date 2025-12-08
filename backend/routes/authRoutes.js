@@ -8,9 +8,9 @@ userRouter.post("/signup", registerUser);
 userRouter.post("/signin", loginUser);
 userRouter.post("/logout", logout);
 // authRoutes.js
-router.route('/me')
-  .get(verifyToken, controller)
-  .post(verifyToken, controller);
+userRouter.get("/me",protect, verifyMe)
+  
+userRouter.post("/me",protect, verifyMe);
 
 
 export default userRouter;
