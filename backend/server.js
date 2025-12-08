@@ -14,16 +14,28 @@ const app = express();
 
 //pase the incoming request in json body
 
-
-//validating authorized req
+// CORS for browser + cookies
 app.use(cors({
   origin: [
     "http://localhost:5173",
     "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
   ],
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type", "Authorization"]
+  credentials: true
+}));
+
+// force allow credentials
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
+
+//validating authorized req
+app.options("*", cors({
+  origin: [
+    "http://localhost:5173",
+    "https://brain-box-5jyg1uu5o-sudesh-s-projects.vercel.app"
+  ],
+  credentials: true
 }));
 
 
@@ -35,7 +47,7 @@ app.use(express.json());
 
 
 //routes for api
-app.use('/api',chatRoutes);
+app.use('/api', chatRoutes);
 
 //routes for authentication
 app.use('/auth', userRouter)
@@ -44,6 +56,6 @@ app.use('/auth', userRouter)
 
 
 app.listen(process.env.PORT, () => {
-    console.log("app is listening on " + process.env.PORT);
-    connectDB();
+  console.log("app is listening on " + process.env.PORT);
+  connectDB();
 })
