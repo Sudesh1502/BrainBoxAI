@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     origin: "http://localhost:5173",
     cors: {
-      origin: "http://localhost:8080", // backend URL
+      origin: "https://brainboxai.onrender.com", // backend URL
       credentials: true
     }
   }

@@ -24,7 +24,7 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
 
   const logout = async () => {
     try {
-      const res = await fetch("http://localhost:8080/auth/logout", {
+      const res = await fetch("https://brainboxai.onrender.com/auth/logout", {
         method: "POST",
         credentials: "include",
       });
@@ -55,7 +55,7 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
     };
 
     try {
-      const response = await fetch(`http://localhost:8080/api/chat`, options);
+      const response = await fetch(`https://brainboxai.onrender.com/api/chat`, options);
       const data = await response.json();
       console.log(data);
       setReply(data);

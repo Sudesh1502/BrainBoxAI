@@ -8,7 +8,7 @@ const ProtectedRoute = ({ children }) => {
   useEffect(() => {
     const verifyUser = async () => {
       try {
-        const res = await fetch("http://localhost:8080/auth/me", {
+        const res = await fetch("https://brainboxai.onrender.com/auth/me", {
           method: "GET",
           credentials: "include"
         });
