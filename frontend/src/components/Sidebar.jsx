@@ -3,7 +3,7 @@ import "./Sidebar.css";
 import logo from "../assets/brainBox AI.png";
 import MyContext from "../MyContext";
 import { v1 as uuidv1 } from "uuid";
-const Sidebar = () => {
+const Sidebar = ({ setShowSidebar }) => {
   const {
     setPrompt,
     setReply,
@@ -18,9 +18,12 @@ const Sidebar = () => {
 
   const getAllThreads = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/threads");
+      const response = await fetch("http://localhost:8080/api/threads", {
+        method: "GET",
+        credentials: "include",
+      });
       const res = await response.json();
-      const data = res.map((thread) => {
+      const data = res?.map((thread) => {
         return { threadId: thread.thread_id, title: thread.title };
       });
 
@@ -47,7 +50,11 @@ const Sidebar = () => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/api/thread/${newThreadId}`
+        `http://localhost:8080/api/thread/${newThreadId}`,
+        {
+          method: "GET",
+          credentials: "include",
+        }
       );
       const res = await response.json();
       setNewChat(false);
@@ -63,7 +70,10 @@ const Sidebar = () => {
     try {
       const response = await fetch(
         `http://localhost:8080/api/thread/${newThreadId}`,
-        { method: "DELETE" }
+        {
+          method: "DELETE",
+          credentials: "include",
+        }
       );
       const res = await response.json();
       setAllThreads((prev) =>
@@ -99,7 +109,9 @@ const Sidebar = () => {
             <li
               onClick={(e) => {
                 e.preventDefault();
+                setShowSidebar(false);
                 getChat(thread.threadId);
+                
               }}
             >
               {thread.title}

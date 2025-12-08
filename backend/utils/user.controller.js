@@ -53,10 +53,10 @@ const loginUser = async (req, res) => {
 
         res.cookie("token", token, {
             httpOnly: true,
-            secure: false,
-            sameSite: "lax"
-        })
-
+            secure: true,       // must be false on localhost
+            sameSite: "none",     // allow cookies between ports
+            path: "/",           // IMPORTANT: allow cookie on all routes
+        });
         return res.status(200).json({
             message: "Login sucessful",
             token
@@ -69,13 +69,28 @@ const loginUser = async (req, res) => {
 
 const logout = async (req, res) => {
     try {
-        res.clearCookie("token");
-        return res.status(200).json({
-            message: "Logout sucessful"
-        })
+        res.clearCookie("token", {
+            httpOnly: true,
+            secure: true,           // must match login cookie
+            sameSite: "none",
+            path: "/",
+        });
+
+        return res.status(200).json({ message: "Logout successful" });
     } catch (err) {
         return res.status(500).json({ error: "Failed to logout" });
     }
 }
 
-export { registerUser, loginUser, logout };
+
+
+
+//this route is for varifing bthe front end routes
+const verifyMe = (req, res) => {
+    return res.status(200).json({
+        user: req.user,
+        message: "Authenticated"
+    });
+}
+
+export { registerUser, loginUser, logout, verifyMe };

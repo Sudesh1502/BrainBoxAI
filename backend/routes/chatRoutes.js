@@ -95,8 +95,8 @@ chatRoutes.post('/chat', protect, async (req, res) => {
         //taking response from ai to the message we refrom user
         const aiResponse = await getOpenAiResponse(message);
 
-        //sending ai response to user
-        res.status(201).json({ role: "assistant", content: aiResponse });
+        
+        
 
         //save ai response to DB
         thread.messages.push({ role: "assistant", content: aiResponse });
@@ -106,6 +106,9 @@ chatRoutes.post('/chat', protect, async (req, res) => {
 
         //saving the modifications
         await thread.save();
+
+        //sending ai response to user
+        res.status(201).json({ role: "assistant", content: aiResponse });
     } catch (err) {
         console.log("something went wrong! \n" + err);
         return res.status(500).json({ error: "Failed to send message!" });

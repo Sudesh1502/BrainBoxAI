@@ -1,0 +1,287 @@
+/* .auth{
+    background-color: #212121;
+    height: 100vh;
+    width:100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.boxFormat{
+    min-height: 450px;
+    width: 400px;
+    background-color: #4f4e4e;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    padding: 10px;
+    gap: 20px;
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.boxFormat input, .passin{
+    width: 80%;
+    font-size: 0.9rem;
+    background-color: #b8b6b6;
+    color: #212121;
+}
+
+.btn{
+    width: 90%;
+    padding: 15px;
+    border-radius: 14px;
+    font-size: 1rem;
+    overflow: hidden;
+    outline: none;
+    border: none;
+    background-color: rgb(217, 67, 67);
+}
+
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 35px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+} */
+
+
+
+
+
+
+
+/* ai gpt */
+
+/* Reset basic margins & box sizing */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  margin: 0;
+}
+
+/* Fullscreen dark background */
+.auth {
+  background-color: #212121;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 16px;
+  position: relative;
+}
+
+/* Make the form itself center its child card */
+.auth form {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Card */
+.boxFormat {
+  min-height: 450px;
+  width: 100%;
+  max-width: 400px;
+  background-color: #4f4e4e;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: stretch;          /* children fill width */
+  padding: 20px;
+  gap: 20px;
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.4);
+}
+
+/* Inputs */
+.boxFormat input,
+.passin {
+  width: 100%;
+  padding: 12px 14px;
+  font-size: 1rem;
+  background-color: #b8b6b6;
+  color: #212121;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+}
+
+/* Button */
+.btn {
+  width: 100%;
+  padding: 15px;
+  border-radius: 14px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  background-color: rgb(217, 67, 67);
+  color: #ffffff;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+}
+
+.btn:hover {
+  background-color: rgb(180, 40, 40);
+  transform: scale(1.02);
+}
+
+/* Password wrapper + eye icon */
+.password-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.password-wrapper input {
+  width: 100%;
+  padding-right: 40px; /* space for icon */
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  user-select: none;
+  color: #212121;
+}
+
+.toggler {
+  position: absolute;
+  top: 20px;
+  right: 30px;
+  font-size: 15px;
+  font-weight: 500;
+  cursor: pointer;
+  color: rgb(231, 228, 228);
+}
+
+.click-here {
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.click-here:hover {
+  color: #aaacae;
+}
+
+.logo {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.logo .img {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  overflow: hidden;
+  background: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logo .img img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.logo p {
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #e3e3e3;
+  letter-spacing: 1px;
+}
+
+/*  RESPONSIVENESS BELOW 450px (small Android phones) */
+@media (max-width: 450px) {
+  .boxFormat {
+    max-width: 320px;
+    min-height: auto;
+    padding: 16px;
+    gap: 14px;
+  }
+
+  .boxFormat input, .passin {
+    font-size: 0.9rem;
+    padding: 11px;
+  }
+
+  .btn {
+    padding: 13px;
+    font-size: 0.95rem;
+  }
+
+  .eye-icon {
+    font-size: 18px;
+  }
+   .logo .img {
+    width: 65px;
+    height: 65px;
+  }
+
+  .logo p {
+    font-size: 1rem;
+  }
+}
+
+/*  Very small devices (iPhone 4, SE, 320px width) */
+@media (max-width: 340px) {
+  .boxFormat {
+    max-width: 290px;
+    padding: 14px;
+    gap: 10px;
+  }
+
+  .btn {
+    font-size: 0.9rem;
+    padding: 12px;
+  }
+
+  .boxFormat input {
+    font-size: 0.85rem;
+    padding: 10px;
+  }
+  .logo .img {
+    width: 55px;
+    height: 55px;
+  }
+
+  .logo p {
+    font-size: 0.9rem;
+  }
+}
+
+/* Tall screens (pixels, Fold, big screens) */
+@media (max-height: 600px) {
+  .auth {
+    align-items: flex-start;
+    padding-top: 40px;
+  }
+}

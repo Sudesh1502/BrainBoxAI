@@ -9,6 +9,47 @@
     align-items: center;
     text-align: center;
 }
+/* NAVBAR ADJUSTMENT */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.6rem 1rem;
+}
+
+/* LEFT SECTION: Title aligned */
+.navbar span {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 1rem;
+  color: white;
+  font-weight: 500;
+}
+
+/* FIX: remove left margin causing overlap */
+.navbar span {
+  margin: 0 !important; 
+}
+
+/* HAMBURGER STYLING */
+.mobileMenuIcon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  margin-right: 8px; /* spacing from title */
+  font-size: 18px;
+  background-color: rgba(255,255,255,0.12);
+  border-radius: 6px;
+  cursor: pointer;
+  color: white;
+}
+
+/* ensure text doesn't sit UNDER hamburger */
+
 
 .loaderContainer {
   display: flex;
@@ -20,16 +61,6 @@
 }
 
 /* nav bar portion  */
-.navbar {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.navbar span{
-    margin: 1rem 2rem;
-}
 
 .userIconDiv{
     margin: 1rem 2rem;
@@ -138,3 +169,92 @@ input:focus {
 }
 
 
+/* Tablet screens */
+@media (max-width: 1024px) {
+  .navbar span,
+  .userIconDiv {
+    margin: 0.7rem 1.2rem;
+  }
+
+  input {
+    font-size: 0.85rem;
+    padding: 16px;
+  }
+}
+
+/* Mobile screens */
+@media (max-width: 600px) {
+  .navbar {
+    padding: 0 1rem;
+  }
+
+  .navbar span,
+  .userIconDiv {
+    margin: 0.5rem 0.8rem;
+    font-size: 0.8rem;
+  }
+
+  .dropDown {
+    right: 1rem;
+    width: 130px;
+    top: 3.2rem;
+  }
+
+  .userinput {
+    width: 92%;
+  }
+
+  input {
+    padding: 14px;
+    font-size: 0.8rem;
+  }
+
+  #submit {
+    right: 10px;
+    height: 28px;
+    width: 28px;
+    font-size: 16px;
+  }
+
+  .info {
+    font-size: 0.7rem;
+  }
+}
+
+/* Very small screens */
+@media (max-width: 400px) {
+  .userinput {
+    width: 90%;
+  }
+
+  input {
+    padding: 12px;
+    font-size: 0.75rem;
+  }
+
+  #submit {
+    right: 8px;
+    height: 26px;
+    width: 26px;
+    font-size: 15px;
+  }
+
+  .dropDown {
+    right: 0.5rem;
+    top: 3rem;
+    width: 115px;
+  }
+
+  .dropDownItem {
+    font-size: 0.78rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+}
