@@ -9,7 +9,7 @@ const getOpenAiResponse = async (message) => {
                 "Authorization": `Bearer ${process.env.OPENAI_API_KEY}`,
             },
             body: JSON.stringify({
-                model: "gpt-5-nano",
+                model: "gpt-5-mini",
                 messages: [
 
                     {
