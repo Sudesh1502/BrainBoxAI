@@ -114,7 +114,7 @@ const Sidebar = ({ setShowSidebar }) => {
                 
               }}
             >
-              {thread.title}
+              {thread.title.length > 20 ? thread.title.slice(0, 20) + "..." : thread.title}
             </li>
             <span className="del">
               <i

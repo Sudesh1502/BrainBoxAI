@@ -1,8 +1,9 @@
 .chats {
     max-width: 700px;
     overflow-y: scroll;
-    padding: 8rem;
+    padding: 6rem 2rem 6rem 2rem; /* top 1rem, bottom 6rem for input space */
 }
+
 .chats::-webkit-scrollbar{
     display: none;
 }
@@ -33,4 +34,18 @@
 
 pre {
     white-space: pre-wrap;
+}
+
+
+
+
+.userMessage {
+    background-color: #323232;
+    padding: 10px 20px;
+    border-radius: 14px;
+    margin-left: 13rem;
+    /* max-width: 704px; */
+    width: 9rem;
+    margin-bottom: 2rem;
+
 }
