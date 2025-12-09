@@ -3,6 +3,7 @@ import "./Sidebar.css";
 import logo from "../assets/brainBox AI.png";
 import MyContext from "../MyContext";
 import { v1 as uuidv1 } from "uuid";
+import { useLoader } from "./LoaderContext";
 const Sidebar = ({ setShowSidebar }) => {
   const {
     setPrompt,
@@ -15,7 +16,7 @@ const Sidebar = ({ setShowSidebar }) => {
     setPrevChat,
     setNewChat,
   } = useContext(MyContext);
-
+const {setLoading} = useLoader();
   const getAllThreads = async () => {
     try {
       const response = await fetch(`${import.meta.env.VITE_RENDER_URL}/api/threads`, {
@@ -46,6 +47,7 @@ const Sidebar = ({ setShowSidebar }) => {
   };
 
   const getChat = async (newThreadId) => {
+    setLoading(true);
     setThreadId(newThreadId);
 
     try {
@@ -60,13 +62,16 @@ const Sidebar = ({ setShowSidebar }) => {
       setNewChat(false);
       setReply(null);
       setPrevChat(res.messages);
+      setLoading(false)
       console.log(res.messages);
     } catch (err) {
       console.log(err);
+      setLoading(false)
     }
   };
 
   const deleteThread = async (newThreadId) => {
+    setLoading(true)
     try {
       const response = await fetch(
         `${import.meta.env.VITE_RENDER_URL}/api/thread/${newThreadId}`,
@@ -83,7 +88,9 @@ const Sidebar = ({ setShowSidebar }) => {
         createNewChat();
       }
       console.log(res);
+      setLoading(false)
     } catch (err) {
+      setLoading(false)
       console.log(err);
     }
   };

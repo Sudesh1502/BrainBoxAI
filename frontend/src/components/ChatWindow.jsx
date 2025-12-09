@@ -5,8 +5,9 @@ import MyContext from "../MyContext";
 import { PropagateLoader } from "react-spinners";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { useLoader } from "./LoaderContext";
 
-const ChatWindow = ({showSidebar, setShowSidebar}) => {
+const ChatWindow = ({ showSidebar, setShowSidebar }) => {
   const {
     prompt,
     setPrompt,
@@ -21,21 +22,29 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
   const [loading, setLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
+  const { setLoading: setGlobalLoading } = useLoader();
 
   const logout = async () => {
+    setGlobalLoading(true);
     try {
-      const res = await fetch(`${import.meta.env.VITE_RENDER_URL}/auth/logout`, {
-        method: "POST",
-        credentials: "include",
-      });
+      const res = await fetch(
+        `${import.meta.env.VITE_RENDER_URL}/auth/logout`,
+        {
+          method: "POST",
+          credentials: "include",
+        }
+      );
 
       if (res.ok) {
         toast.success("Logged out!");
         navigate("/auth");
+        setGlobalLoading(false);
       } else {
         toast.error("Logout failed!");
+        setGlobalLoading(false);
       }
     } catch (err) {
+      setGlobalLoading(false);
       toast.error(err.message || "Network error!");
     }
   };
@@ -55,7 +64,10 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
     };
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_RENDER_URL}/api/chat`, options);
+      const response = await fetch(
+        `${import.meta.env.VITE_RENDER_URL}/api/chat`,
+        options
+      );
       const data = await response.json();
       console.log(data);
       setReply(data);
@@ -90,12 +102,16 @@ const ChatWindow = ({showSidebar, setShowSidebar}) => {
   return (
     <div className="chatwindow">
       <div className="navbar">
-
         <span>
-           {/* mobile hamburger */}
-          {!showSidebar && <div className="mobileMenuIcon" onClick={() => setShowSidebar(!showSidebar)}>
-            <i className="fa-solid fa-bars"></i>
-          </div>}
+          {/* mobile hamburger */}
+          {!showSidebar && (
+            <div
+              className="mobileMenuIcon"
+              onClick={() => setShowSidebar(!showSidebar)}
+            >
+              <i className="fa-solid fa-bars"></i>
+            </div>
+          )}
           BrainBox AI<i className="fa-solid fa-angle-down"></i>
         </span>
 

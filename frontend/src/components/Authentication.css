@@ -59,12 +59,6 @@
   user-select: none;
 } */
 
-
-
-
-
-
-
 /* ai gpt */
 
 /* Reset basic margins & box sizing */
@@ -106,7 +100,7 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
-  align-items: stretch;          /* children fill width */
+  align-items: stretch; /* children fill width */
   padding: 20px;
   gap: 20px;
   border-radius: 14px;
@@ -144,6 +138,23 @@ body {
 .btn:hover {
   background-color: rgb(180, 40, 40);
   transform: scale(1.02);
+}
+
+
+.nsm7Bb-HzV7m-LgbsSe .nsm7Bb-HzV7m-LgbsSe-bN97Pc-sM5MNb{
+  width: 100% !important;
+  padding: 15px !important;
+  border-radius: 14px;
+  font-size: 1rem;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  transition: 0.25s ease-in-out;
+  border-radius: 10px;
+}
+
+.nsm7Bb-HzV7m-LgbsSe-BPrWId{
+  color: black !important;
 }
 
 /* Password wrapper + eye icon */
@@ -228,7 +239,8 @@ body {
     gap: 14px;
   }
 
-  .boxFormat input, .passin {
+  .boxFormat input,
+  .passin {
     font-size: 0.9rem;
     padding: 11px;
   }
@@ -241,7 +253,7 @@ body {
   .eye-icon {
     font-size: 18px;
   }
-   .logo .img {
+  .logo .img {
     width: 65px;
     height: 65px;
   }

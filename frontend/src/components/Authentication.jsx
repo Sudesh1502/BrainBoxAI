@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./Authentication.css";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import logo from '../assets/brainBox AI.png';
+import logo from "../assets/brainBox AI.png";
+import { GoogleLogin } from "@react-oauth/google";
+import { useLoader } from "./LoaderContext";
 
 const Authentication = () => {
   const [toggle, setToggle] = useState(true);
@@ -13,6 +15,8 @@ const Authentication = () => {
   const [logpass, setLogpass] = useState("");
   const [showPass, setShowPass] = useState(false);
   const navigate = useNavigate();
+  
+  const {setLoading} = useLoader();
 
   //function to register the new user
   const authReg = async () => {
@@ -21,6 +25,8 @@ const Authentication = () => {
       toast.error("All fields are required!");
       return;
     }
+
+    setLoading(true)
     try {
       const options = {
         method: "POST",
@@ -42,6 +48,7 @@ const Authentication = () => {
       if (!response.ok) {
         //if error occurs
         toast.error(res.error || "Something went wrong!");
+        setLoading(false);
         return;
       }
       console.log(res);
@@ -52,10 +59,13 @@ const Authentication = () => {
       setRegname("");
       setRegpass("");
       setToggle(!toggle);
+      setLoading(false)
     } catch (err) {
       if (err.response) {
+        setLoading(false)
         toast.error(err.response.data.error);
       } else {
+        setLoading(false)
         toast.error("something went wrong!");
       }
       console.log(err);
@@ -70,7 +80,7 @@ const Authentication = () => {
     }
 
     toast.dismiss(); // clear old toast alerts
-
+    setLoading(true)
     try {
       const options = {
         method: "POST",
@@ -88,6 +98,7 @@ const Authentication = () => {
       // if error occurs
       if (!response.ok) {
         toast.error(res.error || "Login failed!");
+        setLoading(false)
         return;
       }
 
@@ -97,9 +108,11 @@ const Authentication = () => {
       setLogemail("");
       setLogpass("");
       navigate("/");
+      setLoading(false)
     } catch (err) {
       toast.error("Network error! Please try again.");
       console.log(err);
+      setLoading(false)
     }
   };
 
@@ -121,10 +134,10 @@ const Authentication = () => {
         {toggle ? (
           <div className="signup boxFormat">
             <div className="logo">
-                <div className="img">
+              <div className="img">
                 <img src={logo} alt="logo" />
-                </div>
-                <p>BrainBox AI</p>
+              </div>
+              <p>BrainBox AI</p>
             </div>
             <input
               placeholder="Enter your name"
@@ -175,14 +188,41 @@ const Authentication = () => {
             >
               Register
             </button>
+            <GoogleLogin
+              className="google"
+              onSuccess={async (credentialResponse) => {
+                const token = credentialResponse.credential;
+
+                const response = await fetch(
+                  `${import.meta.env.VITE_RENDER_URL}/auth/google`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ token }),
+                  }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  toast.error(data.error || "Google login failed!");
+                  return;
+                }
+
+                toast.success("Logged in with Google!");
+                navigate("/");
+              }}
+              onError={() => toast.error("Google Login Failed!")}
+            />
           </div>
         ) : (
           <div className="signin boxFormat">
             <div className="logo">
-                <div className="img">
-                <img src={logo}alt="logo" />
-                </div>
-                <p>BrainBox AI</p>
+              <div className="img">
+                <img src={logo} alt="logo" />
+              </div>
+              <p>BrainBox AI</p>
             </div>
             <input
               placeholder="Enter your email"
@@ -223,6 +263,34 @@ const Authentication = () => {
             >
               Login
             </button>
+
+            <GoogleLogin
+              className="google"
+              onSuccess={async (credentialResponse) => {
+                const token = credentialResponse.credential;
+
+                const response = await fetch(
+                  `${import.meta.env.VITE_RENDER_URL}/auth/google`,
+                  {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    credentials: "include",
+                    body: JSON.stringify({ token }),
+                  }
+                );
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                  toast.error(data.error || "Google login failed!");
+                  return;
+                }
+
+                toast.success("Logged in with Google!");
+                navigate("/");
+              }}
+              onError={() => toast.error("Google Login Failed!")}
+            />
           </div>
         )}
       </form>

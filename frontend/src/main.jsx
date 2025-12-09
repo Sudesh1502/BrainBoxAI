@@ -1,16 +1,22 @@
 import { StrictMode } from 'react'
 import {BrowserRouter} from 'react-router-dom'
 import { createRoot } from 'react-dom/client'
-
+import { GoogleOAuthProvider } from "@react-oauth/google";
 import './index.css'
 import "react-toastify/dist/ReactToastify.css";
 import App from './components/App.jsx'
+import { LoaderProvider } from './components/LoaderContext.jsx';
+import GlobalLoader from "./components/GlobalLoader.jsx";
 
-//date - 08/11/2025 - we are ready to deploy
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-  <BrowserRouter>
-    <App />
-  </BrowserRouter>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <BrowserRouter>
+        <LoaderProvider>
+          <GlobalLoader />
+          <App />
+        </LoaderProvider>
+      </BrowserRouter>
+    </GoogleOAuthProvider>
   </StrictMode>,
 )
