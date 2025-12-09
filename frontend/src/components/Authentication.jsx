@@ -190,6 +190,7 @@ const Authentication = () => {
             </button>
             <GoogleLogin
               className="google"
+              width="100%" 
               onSuccess={async (credentialResponse) => {
                 const token = credentialResponse.credential;
 
@@ -266,6 +267,7 @@ const Authentication = () => {
 
             <GoogleLogin
               className="google"
+              width="100%" 
               onSuccess={async (credentialResponse) => {
                 const token = credentialResponse.credential;
 
