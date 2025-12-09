@@ -17,6 +17,7 @@
 .gptDiv {
     text-align: left;
     font-size: 0.9rem;
+    padding: 25px;
 }
 
 .userMessage {
