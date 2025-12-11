@@ -1,33 +1,46 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Navigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import GlobalLoader from "./GlobalLoader";
 
-const ProtectedRoute = ({ children }) => {
-  const [auth, setAuth] = useState(null); // null = loading, true/false = final state
+const ProtectedRoute = React.memo(({ children }) => {
+  const [auth, setAuth] = useState("loading"); 
+  // "loading", "authorized", "unauthorized"
 
-  useEffect(() => {
-    const verifyUser = async () => {
-      try {
-        const res = await fetch(`${import.meta.env.VITE_RENDER_URL}/auth/me`, {
-          method: "GET",
-          credentials: "include"
-        });
+  const verifyUser = useCallback(async () => {
+    try {
+      const res = await fetch(`${import.meta.env.VITE_RENDER_URL}/auth/me`, {
+        method: "GET",
+        credentials: "include", // sends cookie/session
+      });
 
-        if (!res.ok) return setAuth(false);
-
-        setAuth(true);
-      } catch (err) {
-        setAuth(false);
-        toast.error(err.message);
+      // If backend returns 401 or any failure
+      if (!res.ok) {
+        setAuth("unauthorized");
+        return;
       }
-    };
 
-    verifyUser();
+      setAuth("authorized");
+    } catch (error) {
+      setAuth("unauthorized");
+
+      // toast moved here but wrapped to avoid repeated firing
+      toast.error("Network Error - Please login again");
+    }
   }, []);
 
-  if (auth === null) return <p>Loading...</p>;
+  useEffect(() => {
+    verifyUser(); // only runs once
+  }, [verifyUser]);
 
-  return auth ? children : <Navigate to="/auth" replace />;
-};
+  //  Cleaner fallback UI (doesn't break layout)
+  if (auth === "loading") {
+    return (
+      <GlobalLoader/>
+    );
+  }
+
+  return auth === "authorized" ? children : <Navigate to="/auth" replace />;
+});
 
 export default ProtectedRoute;
