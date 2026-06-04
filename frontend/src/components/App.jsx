@@ -20,7 +20,7 @@ const App = () => {
             // memoized ProtectedRoute avoids re-renders
             <ProtectedRoute>
               {/*Suspense ensures chunk loading is smooth */}
-              <Suspense fallback={<GlobalLoader/>}>
+              <Suspense fallback={<GlobalLoader forceShow={true} />}>
                 <Application />
               </Suspense>
             </ProtectedRoute>

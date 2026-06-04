@@ -1,10 +1,10 @@
 import { FadeLoader } from "react-spinners";
 import { useLoader } from "../components/LoaderContext";
 
-const GlobalLoader = () => {
+const GlobalLoader = ({ forceShow = false }) => {
   const { loading } = useLoader();
 
-  if (!loading) return null;
+  if (!loading && !forceShow) return null;
 
   return (
     <div
