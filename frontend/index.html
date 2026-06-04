@@ -8,7 +8,27 @@
     <title>BrainBox AI</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root">
+      <style>
+        .initial-loader {
+          position: fixed;
+          top: 0; left: 0; width: 100vw; height: 100vh;
+          display: flex; justify-content: center; align-items: center;
+          background: #000; z-index: 9999;
+        }
+        .initial-spinner {
+          width: 50px; height: 50px;
+          border: 5px solid rgba(255,255,255,0.3);
+          border-radius: 50%;
+          border-top-color: #fff;
+          animation: spin 1s ease-in-out infinite;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+      </style>
+      <div class="initial-loader">
+        <div class="initial-spinner"></div>
+      </div>
+    </div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
 </html>
